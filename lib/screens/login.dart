@@ -1,44 +1,47 @@
 import 'package:flutter/material.dart';
-import 'register.dart';
-import '../camera/camera.dart';
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Register(),
-                  ),
-                );
-              },
-              child: const Text('Login'),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 96),
+            child: SizedBox(
+              width: 150,
+              height: 150,
+              child: Image.asset("img/patokatu.jpg"),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CameraPage(),
-                  ),
-                );
-              },
-              child: const Text('Register'),
+          ),
+          SizedBox(
+            width: 200,
+            height: 50,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () => {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(6, 199, 85, 1.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32))),
+                child: Row(
+                  children: [
+                    Image.asset("img/line_logo.png"),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Text(
+                        "LINE LOGIN",
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
