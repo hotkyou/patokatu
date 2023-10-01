@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../camera/camera.dart';
@@ -8,14 +11,38 @@ import '../authmanage.dart';
 class Login extends ConsumerWidget {
   const Login({super.key});
 
-  _request(userid) {
-    Uri url = Uri.parse("https://api.line.me/v2/bot/message/push");
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'Authorization': 'Bearer {access_token}',
-      'X-Line-Retry-Key': ''
+  void sendLineMessage() async {
+    await dotenv.load(fileName: '.env');
+    String apiUrl = dotenv.get('lineURL');
+    String channelAccessToken = dotenv.get('lineChannelAccessToken');
+
+    final Map<String, dynamic> data = {
+      'to': dotenv.get('lineTo'),
+      'messages': [
+        {
+          'type': 'text',
+          'text': 'Hello, world1',
+        },
+      ],
     };
-    String body = json.encode({'userid': 'moke', 'explain': '', 'image': ''});
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $channelAccessToken',
+    };
+
+    final http.Response response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      print('Message sent successfully.');
+    } else {
+      print('Error sending message: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
   }
 
   @override
@@ -38,6 +65,7 @@ class Login extends ConsumerWidget {
             child: Center(
               child: ElevatedButton(
                 onPressed: () => {
+                  sendLineMessage(),
                   ref.watch(authManagerProvider.notifier).signInWithLine(),
                   Navigator.push(
                       context,

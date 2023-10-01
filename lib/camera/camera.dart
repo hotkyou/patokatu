@@ -49,7 +49,20 @@ class _CameraPageState extends State<CameraPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("カメラ"),
+        title: Column(
+          children: [
+            Container(
+              width: 140,
+              height: 54,
+              decoration: ShapeDecoration(
+                color: Colors.black.withOpacity(0.10999999940395355),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+              ),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
               onPressed: () {
