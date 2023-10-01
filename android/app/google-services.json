@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "949945299701",
+    "project_id": "patokatu-38edf",
+    "storage_bucket": "patokatu-38edf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949945299701:android:0cf9aba852d1cb5648cbbc",
+        "android_client_info": {
+          "package_name": "com.example.patokatu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5NOXCBlkDP1XLlltTMichej-5IaIDMMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
