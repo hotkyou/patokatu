@@ -1,5 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/src/framework.dart';
+
+import '../authmanage.dart';
+import 'camerapreview.dart';
+import '../screens/point.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -43,9 +49,29 @@ class _CameraPageState extends State<CameraPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("分類作業カメラ"),
+        title: const Text("カメラ"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const PointPage()));
+              },
+              child: const Text("0Points"))
+        ],
       ),
       body: CameraPreview(cameraController),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final image = await cameraController.takePicture();
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DisplayPictureScreen(imagePath: image.path),
+              fullscreenDialog: true,
+            ),
+          );
+        },
+        child: const Icon(Icons.camera),
+      ),
     );
   }
 }

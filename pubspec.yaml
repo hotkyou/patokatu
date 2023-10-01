@@ -37,6 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   camera: ^0.10.5+5
   permission_handler: ^11.0.0
+  firebase_core: ^2.16.0
+  flutter_line_sdk: ^2.3.4
+  flutter_riverpod: ^2.3.6
+  firebase_auth: ^4.7.1
+  cloud_functions: ^4.4.1
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,25 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class Login extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../camera/camera.dart';
+import '../authmanage.dart';
+
+class Login extends ConsumerWidget {
   const Login({super.key});
 
+  _request(userid) {
+    Uri url = Uri.parse("https://api.line.me/v2/bot/message/push");
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'Authorization': 'Bearer {access_token}',
+      'X-Line-Retry-Key': ''
+    };
+    String body = json.encode({'userid': 'moke', 'explain': '', 'image': ''});
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +37,13 @@ class Login extends StatelessWidget {
             height: 50,
             child: Center(
               child: ElevatedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  ref.watch(authManagerProvider.notifier).signInWithLine(),
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CameraPage())),
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(6, 199, 85, 1.0),
                     shape: RoundedRectangleBorder(
