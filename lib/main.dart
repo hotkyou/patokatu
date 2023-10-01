@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:patokatu/component/login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'screens/login.dart';
+import 'camera/camera.dart';
+import 'authmanage.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // firebaseの初期化
+  // ↓に先ほど作成したチャンネルのチャンネルIDを入れる(String)
+  await LineSDK.instance.setup("2000955560");
+  runApp(
+    // riverpod用の記述
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends ConsumerWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authManager = ref.watch(authManagerProvider);
     return MaterialApp(
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Login(),
+      debugShowCheckedModeBanner: false,
+      title: 'タイトル',
+      // ログイン中：ホーム画面、未ログイン：ログイン画面
+      home: authManager.isLoggedIn ? const CameraPage() : const Login(),
     );
   }
 }
