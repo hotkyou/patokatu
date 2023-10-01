@@ -8,7 +8,7 @@ class PointPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('ポイント')),
       body: const Center(
-        child: Text('0'),
+        child: Text('0ポイント'),
       ),
     );
   }
